@@ -1,0 +1,29 @@
+#!/bin/bash
+
+cd /home/www/ok6.pl/core/cron
+
+lock_file='allegro_cron_findufo.lock'
+
+if [ -e $lock_file ]
+then
+	mtime=`stat -c %Y $lock_file`
+	now=`date +%s`
+	otime=$[now-mtime]
+
+	# jeżeli lock starszy niż 6h to go zignorować
+	if [ $otime -gt 21600 ]
+	then
+		echo "$lock_file starszy niż 6h - wymuszono zignorowanie LOCKa"
+		rm -f $lock_file
+	else
+	        #echo $lock_file
+	        exit 1
+	fi
+fi
+
+touch $lock_file
+
+/usr/bin/php /home/www/ok6.pl/core/cron/allegroWebApi_get_bids.php --findUFO
+
+
+rm -f $lock_file

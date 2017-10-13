@@ -1,0 +1,8 @@
+
+path='/home/www/ok6.pl'
+shop_repo='http://www.walaszek.pl/svn/MultiShop/trunk'
+sys_user='fizol.fizol'
+db_pref='ok6'
+db_super_user='ok6'
+db_super_pass='ok666'
+domain='ok6.pl'

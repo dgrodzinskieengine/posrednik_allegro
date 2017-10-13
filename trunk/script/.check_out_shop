@@ -1,0 +1,83 @@
+#!/bin/bash
+
+cd /var/www/ok6.pl/core/script
+
+. ../configure
+
+if [ $USER != 'root' ]
+then
+	echo "Skrypt powinien być wykonywany z prawem root'a"
+	exit
+fi
+
+param1=`echo $1 | awk -F '=' '{print $1}'`
+value1=`echo $1 | awk -F '=' '{print $2}'`
+
+param2=`echo $2 | awk -F '=' '{print $1}'`
+value2=`echo $2 | awk -F '=' '{print $2}'`
+
+function show_help
+{
+        echo ""
+        echo "Skrypcik czeckautuje kopię sklepu z repozytorium i podpina do niej serwis WWW"
+        echo ""
+        echo "Użycie: .check_out [--help] --name=nazwa_sklepu"
+        echo "Parametry wywołania:"
+        echo "   --name - nazwa/login nowego sklepu"
+        echo "   --pass - hasło użytkownika nowego sklepu"
+        echo ""
+        exit
+}
+
+if [ "$param1" == "--help" ] || [ "$param1" == "" ]
+then
+        show_help
+fi
+
+name=""
+if [ "$param1" == "--name" ]
+then
+        name=$value1
+fi
+
+if [ "$name" == "" ]
+then
+        show_help
+fi
+
+if [ "$param2" == "--help" ] || [ "$param2" == "" ]
+then
+        show_help
+fi
+
+pass=""
+if [ "$param2" == "--pass" ]
+then
+        pass=$value2
+fi
+
+if [ "$pass" == "" ]
+then
+        show_help
+fi
+
+if [ -e $path/shops/$name  ]
+then
+	echo "Sklep o nazwie \"$name\" już istnieje."
+	echo "Uzyj skryptu .drop_shop jeżeli chcesz go na pewno skasować.\n"
+	exit
+fi
+
+svn co $shop_repo $path/shops/$name
+
+chown -R $sys_user $path/shops/$name
+chmod -R a+w $path/shops/$name/images
+chmod -R a+w $path/shops/$name/tmp
+chmod -R a+w $path/shops/$name/admin/backups
+
+echo "CREATE DATABASE \`"$db_pref"_"$name"\` DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;" | mysql --user=$db_super_user --password=$db_super_pass
+cat shop.sql | mysql --user=$db_super_user --password=$db_super_pass $db_pref"_"$name
+echo "UPDATE counter SET startdate = '`date +%Y%m%d`', counter = '0'; TRUNCATE TABLE administrators_audyt;" | mysql --user=$db_super_user --password=$db_super_pass $db_pref"_"$name
+echo "INSERT INTO shop (shop_name, shop_name_full, shop_url, shop_password) VALUES (\"$name\", \"$name\", \"http://$name.$domain\", \"$pass\");" | mysql --user=$db_super_user --password=$db_super_pass $db_pref
+
+./.apache_reload

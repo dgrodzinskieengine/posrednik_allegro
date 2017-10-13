@@ -1,0 +1,33 @@
+<?php
+
+define('NAZWA', 'WCH');
+define('DOMENA',  'xyz.walaszek.pl');
+define('KATALOG', '/var/www/xyz');
+define('DB_HOST', 'localhost');
+define('DB_PORT', 3306);
+define('DB_USER', 'xyz');
+define('DB_PASS', 'xyzxyz');
+define('DB_PREF', 'xyz');
+
+define('MAIL_FROM', 'pawel@walaszek.pl');
+define('MAIL_FROMNAME', 'Paweł Walaszek');
+define('MAIL_HOST', 'smtp.gmail.com');
+define('MAIL_MAILER', 'smtp');
+define('MAIL_USERNAME', 'pawel@walaszek.pl');
+define('MAIL_PASSWORD', '*****************');
+define('MAIL_SMTPAUTH', true);
+define('MAIL_MTPSECURE', 'tls');
+define('MAIL_PORT', 587);
+
+setlocale(LC_ALL, 'pl_PL.UTF_8');
+
+define('DBG', true);
+
+if(defined("DBG") && DBG != false)
+{
+	error_reporting(E_ALL ^ E_NOTICE);
+}
+
+//define('COMBINE_CSS_AND_JS', true);		///< jeszcze nie obsługiwane
+
+//require_once(dirname(__FILE__).'/lib/Core/Debug.php');

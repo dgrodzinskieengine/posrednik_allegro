@@ -1,0 +1,45 @@
+#!/bin/bash
+
+cd /home/www/ok6.pl/core/script
+
+. ../configure
+
+vhostfile=$domain
+
+if [ $USER != 'root' ]
+then
+	echo "Skrypt powinien być wykonywany z prawem root'a"
+	exit
+fi
+
+echo "# Ten plik modyfikowany jest automatycznie przez: apache_restart" > $vhostfile
+echo "" >> $vhostfile
+
+#echo "<Directory /var/www/wch>" >> $vhostfile
+#echo "  AuthName \"Tylko dla wybrancow\"" >> $vhostfile
+#echo "  AuthType Basic" >> $vhostfile
+#echo "  AuthUserFile /var/www/wch/.htpasswd" >> $vhostfile
+#echo "  AuthGroupFile /dev/null" >> $vhostfile
+#echo "  require valid-user" >> $vhostfile
+#echo "</Directory>" >> $vhostfile
+#echo "" >> $vhostfile
+
+echo "<VirtualHost *>" >> $vhostfile
+echo "  DocumentRoot $path/core/www" >> $vhostfile
+echo "  ServerName core.$domain" >> $vhostfile
+echo "</VirtualHost>" >> $vhostfile
+echo "" >> $vhostfile
+
+for nazwa in `ls -1 $path/shops`
+do
+	echo "# $nazwa" >> $vhostfile
+	echo "<VirtualHost *>" >> $vhostfile
+	echo "   DocumentRoot $path/shops/$nazwa" >> $vhostfile
+	echo "   ServerName $nazwa.$domain" >> $vhostfile
+	echo "   ServerAlias *.$nazwa.$domain" >> $vhostfile
+	echo "</VirtualHost>" >> $vhostfile
+	echo "Znaleziono: $nazwa"
+	echo "" >> $vhostfile
+done
+
+sudo /etc/init.d/apache2 reload

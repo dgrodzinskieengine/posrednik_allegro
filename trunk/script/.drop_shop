@@ -1,0 +1,47 @@
+#!/bin/bash
+
+cd /var/www/ok6.pl/core/script
+
+. ../configure
+
+if [ $USER != 'root' ]
+then
+	echo "Skrypt powinien być wykonywany z prawem root'a"
+	exit
+fi
+
+param1=`echo $1 | awk -F '=' '{print $1}'`
+value1=`echo $1 | awk -F '=' '{print $2}'`
+
+function show_help
+{
+        echo ""
+        echo "Skrypcik dropuje kopię sklepu"
+        echo ""
+        echo "Użycie: .drop [--help] --name=nazwa_sklepu"
+        echo "Parametry wywołania:"
+        echo "   --name - nazwa nowego sklepu"
+        echo ""
+        exit
+}
+
+if [ "$param1" == "--help" ] || [ "$param1" == "" ]
+then
+        show_help
+fi
+
+name=""
+if [ "$param1" == "--name" ]
+then
+        name=$value1
+fi
+
+if [ "$name" == "" ]
+then
+        show_help
+fi
+
+rm -fr $path/shops/$name
+echo "DELETE FROM shop WHERE shop_name = \"$name\";" | mysql --user=$db_super_user --password=$db_super_pass $db_pref
+
+./.apache_reload

@@ -1,0 +1,164 @@
+* {
+	font-family: Helvetica, Verdana, Arial;
+}
+body {
+	margin: 0px;
+	min-height: 1100px;
+}
+body, td, th, div, a {
+	font-size: 11px;
+}
+table.main {
+	width: 100%;
+	border-collapse: collapse;
+}
+table.main td {
+	padding: 0px;
+}
+table.main .centerColumn {
+	width: 681px;
+}
+a.logo {
+	float: left;
+	width: 250px;
+	height: 148px;
+	background: url("../img/wch_logo.png") no-repeat;
+	text-indent: -10000px; font-size: 1px;
+}
+
+div.gorneMenu {
+	width: 280px;
+	height: 15px;
+	float: right;
+	margin-top: 132px;
+	margin-right: 17px;
+}
+div.gorneMenu a, div.gorneMenu div {
+	float: left;
+	height: 15px;
+	text-indent: -10000px; font-size: 1px;
+}
+div.gorneMenu div.separator {
+	width: 46px;
+	height: 15px;
+	background: url("../img/gorne_menu_separator.png") no-repeat;
+}
+div.gorneMenu a.stronaGlowna {
+	width: 102px;
+	background: url("../img/gorne_menu_strona_glowna.png") no-repeat;
+}
+div.gorneMenu a.oNas {
+	width: 36px;
+	background: url("../img/gorne_menu_o_nas.png") no-repeat;
+}
+div.gorneMenu a.kontakt {
+	width: 50px;
+	background: url("../img/gorne_menu_kontakt.png") no-repeat;
+}
+
+div.searchBar {
+	clear: both;
+	float: left;
+	width: 681px;
+	height: 70px;
+	background: url("../img/search_bar.png") no-repeat;
+}
+
+div.flashBar {
+	clear: both;
+	float: left;
+	width: 648px;
+	height: 216px;
+	background: url("../img/flash_bg.jpg") no-repeat;
+	font-size: 20px;
+	margin-top: 15px;
+	padding: 0px 17px 0 16px;
+}
+
+.contentBottom {
+	clear: both;
+	width: 681px;
+	height: 2px;
+	background: url("../img/content_bg_bottom.gif") no-repeat;
+}
+
+.offers {
+	clear: both;
+	width: 649px;
+	background-color: white;
+	padding: 16px 16px 14px 16px;
+}
+
+.offers .title {
+	width: 648px;
+	height: 29px;
+	background: url("../img/title_bg.png") repeat-y;
+	margin-bottom: 2px;
+}
+
+.offers .title .text {
+	padding-top: 6px;
+	padding-left: 30px;
+	color: #eb4a03;
+	font-weight: bold;
+}
+
+.offers .content {
+	width: 614px;
+	border: 1px solid #efefef;
+	padding: 8px 16px;
+}
+
+.offers .position {
+	clear: both;
+	height: 76px;
+	padding: 8px 0px;
+}
+
+.offers .content .position .picture {
+	float: left;
+	width: 76px;
+	height: 76px;
+	background-position: center center;
+	overflow: hidden;
+}
+
+.offers .content .position .picture img {
+	width: 76px;
+	height: 76px;
+	border: 0px;
+}
+
+.offers .content .position .description {
+	clear: none;
+	float: left;
+	width: 488px;
+	height: 75px;
+	border-bottom: 1px solid black;
+	font-size: 10px;
+	padding: 0px 25px;
+}
+
+.offers .content .position .description .title {
+	background: none;
+	font-weight: bold;
+	color: #8abc29;
+	text-decoration: none;
+	font-size: 11px;
+	width: 488px;
+	float: left;
+	height: 20px;
+}
+
+.copyright {
+	text-align: center;
+	padding-top: 8px;
+	color: black;
+}
+.copyright a {
+	color: black;
+	text-decoration: none;
+}
+.copyright .position {
+	padding: 0px 25px;
+}
